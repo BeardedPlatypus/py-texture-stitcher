@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sbe-stitch"
+version = "0.1.0"
+description = ""
+authors = ["BeardedPlatypus <mwtegelaers@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sbe_stitch"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pillow = "^10.3.0"
+typer = "^0.12.3"
+
+
+[tool.poe.tasks.main]
+cmd = "python -m sbe_stitch"
+help = "Run the main project"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
