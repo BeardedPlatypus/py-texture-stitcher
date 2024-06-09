@@ -12,6 +12,8 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: "1.8"
+      - name: Install Poetry
+        run: poetry install
       - name: Run mypy
         run: poetry run poe mypy --strict
   
