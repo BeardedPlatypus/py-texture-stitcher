@@ -7,23 +7,23 @@ Pad: TypeAlias = Union[int, Tuple[int, int], Tuple[int, int, int, int]]
 
 
 def _print_msg(suffix: str, msg: str, padding: Optional[Pad]) -> None:
-    msg = f"{suffix} {msg}"
+    print_msg: Union[str, Padding] = f"{suffix} {msg}"
     if padding:
-        msg = Padding(msg, padding)
-    print(msg)
+        print_msg = Padding(print_msg, padding)
+    print(print_msg)
 
 
-def info(msg: str, padding: Optional[Pad]=None) -> None:
+def info(msg: str, padding: Optional[Pad] = None) -> None:
     _print_msg("[bold steel_blue1]Info:[/bold steel_blue1]", msg, padding)
 
 
-def warning(msg: str, padding: Optional[Pad]=None) -> None:
+def warning(msg: str, padding: Optional[Pad] = None) -> None:
     _print_msg("[bold orange1]Warning:[/bold orange1]", msg, padding)
 
 
-def error(msg: str, padding: Optional[Pad]=None) -> None:
+def error(msg: str, padding: Optional[Pad] = None) -> None:
     _print_msg("[bold bright_red]Error:[/bold bright_red]", msg, padding)
 
 
-def success(msg: str, padding: Optional[Pad]=None) -> None:
+def success(msg: str, padding: Optional[Pad] = None) -> None:
     _print_msg("[bold chartreuse1]Success:[/bold chartreuse1]", msg, padding)

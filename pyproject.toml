@@ -6,6 +6,7 @@ authors = ["BeardedPlatypus <mwtegelaers@gmail.com>"]
 readme = "README.md"
 packages = [{include = "sbe_stitch"}]
 
+
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
 pillow = "^10.3.0"
@@ -15,15 +16,41 @@ typer = "^0.12.3"
 [tool.poetry.group.package.dependencies]
 pyinstaller = "^6.8.0"
 
+
+[tool.poetry.group.linters.dependencies]
+ruff = "^0.4.8"
+mypy = "^1.10.0"
+
+
+[tool.ruff]
+target-version = "py311"
+
+
+[tool.mypy]
+python_version = "3.11"
+packages = "sbe_stitch"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
 [tool.poe.tasks.main]
 cmd = "python -m sbe_stitch"
 help = "Run the main project"
+
 
 [tool.poe.tasks.package]
 cmd = "pyinstaller sbe_stitch/__main__.py --name sbe_stitch"
 help = "Package this application with pyinstaller"
 
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poe.tasks.ruff]
+cmd = "ruff"
+help = "Run ruff linter"
+
+
+[tool.poe.tasks.mypy]
+cmd = "mypy"
+help = "Run mypy linter"

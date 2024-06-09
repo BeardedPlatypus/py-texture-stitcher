@@ -19,25 +19,27 @@ def _retrieve_image_paths(input_directory: Path) -> Sequence[Path]:
 
 
 def _error_inconsistent_size(images: Sequence[Tuple[Path, PILImage]]) -> None:
-    common.error(f"Inconsistent sizes found:")
+    common.error("Inconsistent sizes found:")
     for p, img in images:
         print(Padding(f"{p.resolve()}: {img.size}", (0, 0, 0, 4)))
 
 
-def _retrieve_images(input_directory: Path) -> Optional[Sequence[Tuple[Path, PILImage]]]:
+def _retrieve_images(
+    input_directory: Path,
+) -> Optional[Sequence[Tuple[Path, PILImage]]]:
     if not input_directory.exists():
         common.error(f"The input folder '{input_directory}' does not exist.")
         return None
     if not input_directory.is_dir():
         common.error(f"The input folder '{input_directory}' is not a directory.")
         return None
-    
+
     image_paths = _retrieve_image_paths(input_directory)
 
     if not image_paths:
         common.error(f"No images found in the input folder '{input_directory}'.")
         return None
-    
+
     images = [(p, Image.open(p)) for p in image_paths]
 
     expected_size = images[0][1].size
@@ -54,13 +56,8 @@ def _determine_dimensions(n_images: int) -> Tuple[int, int]:
     return a_float, b_float
 
 
-def _is_valid_dimensions(
-    preferred_dimensions: Tuple[int, int], n_images: int
-) -> bool:
-    return (
-        preferred_dimensions is None or
-        preferred_dimensions[0] * preferred_dimensions[1] >= n_images
-    )
+def _is_valid_dimensions(preferred_dimensions: Tuple[int, int], n_images: int) -> bool:
+    return preferred_dimensions[0] * preferred_dimensions[1] >= n_images
 
 
 def _error_incorrect_stitch_dimensions(
@@ -83,7 +80,7 @@ def _stitch(
 ) -> Tuple[PILImage, StitchDescription]:
     elem_img_size = images[0][1].size
     new_image_size = _calculate_stitch_image_size(elem_img_size, stitch_dimensions)
-    stitch_img = Image.new('RGBA', new_image_size)
+    stitch_img = Image.new("RGBA", new_image_size)
 
     for i, (_, img) in enumerate(images):
         x_i = i % stitch_dimensions[0]
@@ -97,7 +94,7 @@ def _stitch(
         Dimension(stitch_dimensions[0], stitch_dimensions[1]),
         Dimension(elem_img_size[0], elem_img_size[1]),
     )
-    
+
     return stitch_img, description
 
 
@@ -114,19 +111,18 @@ def _success_stitched_image(output_path_img: Path, output_path_description: Path
 
 
 def stitch(
-    output_path: Path, 
-    input_directory: Path, 
-    preferred_dimensions: Optional[Tuple[int, int]]
+    output_path: Path,
+    input_directory: Path,
+    dims: Optional[Tuple[int, int]],
 ) -> None:
     if not (images := _retrieve_images(input_directory)):
         return
-    
-    
-    if not _is_valid_dimensions(preferred_dimensions, len(images)):
-        _error_incorrect_stitch_dimensions(preferred_dimensions, len(images))
+
+    if dims and not _is_valid_dimensions(dims, len(images)):
+        _error_incorrect_stitch_dimensions(dims, len(images))
         return
 
-    dimensions = preferred_dimensions or _determine_dimensions(len(images))
+    dimensions = dims or _determine_dimensions(len(images))
 
     stitched_image, stitched_description = _stitch(images, dimensions)
 
@@ -134,7 +130,7 @@ def stitch(
         output_path = output_path / f"{output_path.name}.png"
 
     output_path_description = output_path.with_suffix(SUFFIX)
-    
+
     _write_description(output_path_description, stitched_description)
     stitched_image.save(output_path)
 
