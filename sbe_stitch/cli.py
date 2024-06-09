@@ -1,14 +1,16 @@
 from pathlib import Path
 from typer import Typer
 from typing import Optional, Tuple
+
+from sbe_stitch.info import print_info
 from sbe_stitch.stitch import stitch as _stitch
 
 app = Typer()
 
 
 @app.command()
-def hello(name: str) -> None:
-    print(f"Hello {name or ''}")
+def info(path: str) -> None:
+    print_info(Path(path))
 
 
 @app.command()
