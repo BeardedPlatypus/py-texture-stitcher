@@ -69,7 +69,7 @@ class StitchDescription:
 
     @staticmethod
     def _is_stitch_description(input_dict: Dict[str, Any]) -> bool:
-        return input_dict.get("metadata", {}).get("stitch_description", False)
+        return input_dict.get("metadata", {}).get("stitch_description", False)  # type: ignore
 
     @classmethod
     def from_dict(cls, input_dict: Dict[str, Any]) -> Optional[StitchDescription]:
