@@ -104,7 +104,9 @@ def _write_description(file_path: Path, description: StitchDescription) -> None:
         json.dump(data, fp, indent=4)
 
 
-def _success_stitched_image(output_path_img: Path, output_path_description: Path):
+def _success_stitched_image(
+    output_path_img: Path, output_path_description: Path
+) -> None:
     common.success("Stitched image:")
     print(Padding(f"Image: {output_path_img}", (0, 0, 0, 4)))
     print(Padding(f"Description: {output_path_description}", (0, 0, 0, 4)))
