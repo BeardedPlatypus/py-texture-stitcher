@@ -14,5 +14,9 @@ def info(path: str) -> None:
 
 
 @app.command()
-def stitch(output_path: str, input_directory: str, preferred_dimensions: Optional[Tuple[int, int]] = None) -> None:
+def stitch(
+    output_path: str,
+    input_directory: str,
+    preferred_dimensions: Optional[Tuple[int, int]] = None,
+) -> None:
     _stitch(Path(output_path), Path(input_directory), preferred_dimensions)

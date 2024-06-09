@@ -24,10 +24,10 @@ class Version:
             "minor": self.minor,
             "patch": self.patch,
         }
-    
+
     def to_str(self) -> str:
         return f"{self.major}.{self.minor}.{self.patch}"
-    
+
 
 @dataclass
 class Dimension:
@@ -43,7 +43,7 @@ class Dimension:
             "x": self.x,
             "y": self.y,
         }
-    
+
     def to_str(self) -> str:
         return f"{self.x}, {self.y}"
 
@@ -52,12 +52,9 @@ class StitchDescriptionMetadata:
     @property
     def version(self) -> Version:
         return Version(1, 0, 0)
-    
-    def to_dict(self) -> Dict[str: Any]:
-        return { 
-            "stitch_description": True,
-            "version": self.version.to_dict() 
-        }
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {"stitch_description": True, "version": self.version.to_dict()}
 
 
 @dataclass
@@ -80,9 +77,9 @@ class StitchDescription:
             return None
 
         return cls(
-            [Path(p) for p in input_dict["image_paths"]], 
+            [Path(p) for p in input_dict["image_paths"]],
             Dimension.from_dict(input_dict["stitch_dimension"]),
-            Dimension.from_dict(input_dict["image_dimension"])
+            Dimension.from_dict(input_dict["image_dimension"]),
         )
 
     def _compute_resolved_paths(self) -> Sequence[str]:
@@ -94,4 +91,4 @@ class StitchDescription:
             "image_paths": self._compute_resolved_paths(),
             "stitch_dimension": self.stitch_dimension.to_dict(),
             "image_dimension": self.image_dimension.to_dict(),
-       }
+        }
