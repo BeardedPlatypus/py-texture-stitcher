@@ -1,4 +1,7 @@
+from pathlib import Path
 from typer import Typer
+from typing import Optional, Tuple
+from sbe_stitch.stitch import stitch as _stitch
 
 app = Typer()
 
@@ -9,8 +12,5 @@ def hello(name: str) -> None:
 
 
 @app.command()
-def goodbye(name: str, formal: bool = False) -> None:
-    if formal:
-        print(f"Goodbye {name}. Have a good day.")
-    else:
-        print(f"Bye {name}!")
+def stitch(output_path: str, input_directory: str, preferred_dimensions: Optional[Tuple[int, int]] = None) -> None:
+    _stitch(Path(output_path), Path(input_directory), preferred_dimensions)
