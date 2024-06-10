@@ -2,7 +2,7 @@
 
 # `sbe_stitch`
 
-[![Actions status](https://github.com/BeardedPlatypus/py-texture-stitcher/workflows/CI/badge.svg)](https://github.com/BeardedPlatypus/py-texture-stitcher/actions)
+[![Linters](https://github.com/BeardedPlatypus/py-texture-stitcher/actions/workflows/linters.yml/badge.svg)](https://github.com/BeardedPlatypus/py-texture-stitcher/actions/workflows/linters.yml)
 [![License](https://img.shields.io/github/license/BeardedPlatypus/py-texture-stitcher)](/LICENSE.md)
 
 `sbe_stitch.exe` is a tiny CLI texture stitching application written in Python and provided as a single executable through [pyinstaller][pyinstaller].
