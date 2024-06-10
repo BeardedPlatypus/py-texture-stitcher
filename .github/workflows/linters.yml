@@ -1,5 +1,13 @@
-name: Mypy 
-on: [ push, pull_request ]
+name: Linters
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'poetry.lock'
 jobs:
   mypy:
     runs-on: ubuntu-latest
@@ -16,4 +24,11 @@ jobs:
         run: poetry install
       - name: Run mypy
         run: poetry run poe mypy --strict
-  
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'
+          changed-files: 'true'
